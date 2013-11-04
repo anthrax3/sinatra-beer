@@ -14,10 +14,10 @@
         <option value="60 Minute IPA">60 Minute IPA</option>
       </select></br>
       
-      <label>Overall:</label><input name="weight1" type="range" min="0" max="10" step="1" value="5"></br>
-      <label>Aroma: </label><input name="weight2" type="range" min="0" max="10" step="1" value="5"></br>
-      <label>Taste: </label><input name="weight3" type="range" min="0" max="10" step="1" value="5"></br>
-      <label>Color: </label><input name="weight4" type="range" min="0" max="10" step="1" value="5"></br>
+      <label>Overall:</label><input id="weight1" type="range" min="0" max="10" step="1" value="5"></br>
+      <label>Aroma: </label><input id="weight2" type="range" min="0" max="10" step="1" value="5"></br>
+      <label>Taste: </label><input id="weight3" type="range" min="0" max="10" step="1" value="5"></br>
+      <label>Color: </label><input id="weight4" type="range" min="0" max="10" step="1" value="5"></br>
       <input type="submit" value="Go!">
     </form>
     <pre id="result" style="background-color: #E8E8E8; width: 700px;">
@@ -26,8 +26,24 @@
   <script type="text/javascript">
     $("#rec").submit(function(e) {
         var beer = $("#beer").val();
-        $.get("/" + beer, function(d) {
-          $("#result").text(JSON.stringify(d, null, 2));
+        var payload = {
+          beer: $("#beer").val(),
+          weights: [
+            parseFloat($("#weight1").val()),
+            parseFloat($("#weight2").val()),
+            parseFloat($("#weight3").val()),
+            parseFloat($("#weight4").val())
+          ]
+        };
+
+        $.ajax({
+           type: "POST",
+           url: "/",
+           data: JSON.stringify(payload),
+           contentType: "application/json",
+           success: function(d) {
+              $("#result").text(JSON.stringify(d, null, 2));
+           }
         });
         return false;
     });

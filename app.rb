@@ -18,3 +18,9 @@ get '/:name' do |n|
   content_type :json
   yh.predict("PydataBeerRec", { "beer" => n }.to_json).to_json
 end
+
+post '/' do
+  content_type :json
+  data = request.body.read
+  yh.predict("PydataBeerRec", data).to_json
+end

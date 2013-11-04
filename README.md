@@ -3,6 +3,7 @@
 ## Quickstart
 
     # in one window
-    $ ruby hello.rb
+    $ ruby app.rb
     # in another window
     $ curl -s http://localhost:4567/ | jq .
+

@@ -2,51 +2,39 @@
 <html>
   <head>
     <title>Ruby Beer Recommender</title>
-    <link href="css/styles.css"></link>
-    <script src="js/jquery-1.10.2.min.js"></script>
+    <link href="css/main.css" rel="stylesheet" type="text/css"></link>
   </head>
   <body>
-    <form id="rec">
-      <select id="beer">
-        <option value="Coors Light">Coors Light</option>
-        <option value="Sierra Nevada Pale Ale">Sierra Nevada Pale Ale</option>
-        <option value="Fat Tire Amber Ale">Fat Tire Amber Ale</option>
-        <option value="Blue Moon Belgian White">Blue Moon Belgian White</option>
-        <option value="60 Minute IPA">60 Minute IPA</option>
-      </select></br>
-      
-      <label>Overall:</label><input id="weight1" type="range" min="0" max="10" step="1" value="5"></br>
-      <label>Aroma: </label><input id="weight2" type="range" min="0" max="10" step="1" value="5"></br>
-      <label>Taste: </label><input id="weight3" type="range" min="0" max="10" step="1" value="5"></br>
-      <label>Color: </label><input id="weight4" type="range" min="0" max="10" step="1" value="5"></br>
-      <input type="submit" value="Go!">
-    </form>
-    <pre id="result" style="background-color: #E8E8E8; width: 700px;">
-    </pre>
+  <div class="container">
+      <form id="rec">
+          <select id="beer" class="dropdown">
+              <option value="Coors Light">Coors Light</option>
+              <option value="Sierra Nevada Pale Ale">Sierra Nevada Pale Ale</option>
+              <option value="Fat Tire Amber Ale">Fat Tire Amber Ale</option>
+              <option value="Blue Moon Belgian White">Blue Moon Belgian White</option>
+              <option value="60 Minute IPA">60 Minute IPA</option>
+          </select>
+          <fieldset>
+              <label>Overall:</label><input id="weight1" type="range" min="0" max="10" step="1" value="5">
+          </fieldset>
+          <fieldset>
+              <label>Aroma: </label><input id="weight2" type="range" min="0" max="10" step="1" value="5">
+          </fieldset>
+          <fieldset>
+              <label>Taste: </label><input id="weight3" type="range" min="0" max="10" step="1" value="5">
+          </fieldset>
+          <fieldset>
+              <label>Color: </label><input id="weight4" type="range" min="0" max="10" step="1" value="5">
+          </fieldset>
+          <button class="btn" type="submit">Go!</button>
+      </form>
+      <section class="results">
+          <p class="lead">The Lineup</p>
+          <figure class="visualization"></figure>
+        </section>
+      <pre id="result"></pre>
+  </div>
+  <script src="js/jquery-1.10.2.min.js"></script>
+  <script type="text/javascript" src="js/main.js"></script>
   </body>
-  <script type="text/javascript">
-    $("#rec").submit(function(e) {
-        var beer = $("#beer").val();
-        var payload = {
-          beer: $("#beer").val(),
-          weights: [
-            parseFloat($("#weight1").val()),
-            parseFloat($("#weight2").val()),
-            parseFloat($("#weight3").val()),
-            parseFloat($("#weight4").val())
-          ]
-        };
-
-        $.ajax({
-           type: "POST",
-           url: "/",
-           data: JSON.stringify(payload),
-           contentType: "application/json",
-           success: function(d) {
-              $("#result").text(JSON.stringify(d, null, 2));
-           }
-        });
-        return false;
-    });
-  </script>
 </html>
